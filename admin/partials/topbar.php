@@ -36,6 +36,7 @@ if ($user_id) {
         $stmt->close();
     }
 }
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -190,7 +191,7 @@ if ($user_id) {
                      <div class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown">
                            <div class="dropdown-item profile-sec">
-                              <img src="<?php echo $user_profile['profile_pic'] ?? '../assets/images/default_profile.png'; ?>" alt="" style="max-width:40px; border-radius:50%;">
+                           <img src="../<?php echo $user_profile['profile_pic']; ?>" alt="Profile Picture" style="max-width:40px; border-radius:50%;">
                               <span><?php echo $user_profile['username'] ?? 'My Account'; ?></span>
                               <i class="fas fa-caret-down"></i>
                            </div>
