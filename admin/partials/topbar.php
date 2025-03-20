@@ -37,6 +37,29 @@ if ($user_id) {
     }
 }
 
+
+// Ambil site_icon dari tabel settings
+$sql = "SELECT site_icon FROM settings LIMIT 1";
+$result = $conn->query($sql);
+$site_icon = '../assets/images/favicon.png'; // Default favicon
+if ($result && $result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    if (!empty($row['site_icon'])) {
+        $site_icon = $row['site_icon'];
+    }
+}
+
+
+// Ambil site_name dari tabel settings
+$sql = "SELECT site_name FROM settings LIMIT 1";
+$result = $conn->query($sql);
+$site_name = "Travele"; // Default nama website
+if ($result && $result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    if (!empty($row['site_name'])) {
+        $site_name = $row['site_name'];
+    }
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -45,7 +68,8 @@ if ($user_id) {
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <!-- favicon -->
-      <link rel="icon" type="image/png" href="../assets/images/favicon.png">
+      <!-- favicon -->
+      <link rel="icon" type="image/png" href="<?php echo htmlspecialchars($site_icon); ?>">
       <!-- Bootstrap CSS -->
       <link rel="stylesheet" href="assets/css/bootstrap.min.css" media="all">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
@@ -55,7 +79,7 @@ if ($user_id) {
       <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
       <!-- Custom CSS -->
       <link rel="stylesheet" type="text/css" href="../admin/assets/css/style.css">
-      <title>Travele | Travel & Tour HTML5 template</title>
+      <title><?php echo htmlspecialchars($site_name); ?> | Travel & Tour</title>
       <!-- Include jQuery -->
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
    </head>
@@ -200,7 +224,7 @@ if ($user_id) {
                            <ul>                 
                               <li><a href="../admin/settings.php"><i class="fas fa-cog"></i>Settings</a></li>
                               <li><a href="../admin/profile.php"><i class="fas fa-user-tie"></i>Profile</a></li>
-                              <li><a href="../admin/change_password.php"><i class="fas fa-key"></i>Password</a></li>
+                              <li><a href="../forgot.php"><i class="fas fa-key"></i>Password</a></li>
                               <li><a href="../logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
                            </ul>
                         </div>

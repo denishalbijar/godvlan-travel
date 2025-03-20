@@ -1,24 +1,27 @@
 <?php
 // File: ../admin/partials/footers.php
+include('../config.php'); // Koneksi ke database
 
-// Baca file settings JSON untuk data footer
-$settings_file = '../admin/settings.json';
-if (file_exists($settings_file)) {
-    $footerSettings = json_decode(file_get_contents($settings_file), true);
-} else {
-    // Nilai default jika file tidak ditemukan
-    $footerSettings = [
-        'site_description' => 'Default website description.',
-        'email'            => 'info@example.com',
-        'phone_number'     => '+62 812-3456-7890',
-        'store_address'    => 'Jl. Contoh No. 123, Kota Contoh, Indonesia'
-    ];
+// Ambil data dari tabel settings
+$sql = "SELECT site_description, email, phone_number, store_address, operating_hours FROM settings LIMIT 1";
+$result = $conn->query($sql);
+
+// Default jika data tidak ditemukan
+$footerSettings = [
+    'site_description' => 'Default website description.',
+    'email'            => 'info@example.com',
+    'phone_number'     => '+62 812-3456-7890',
+    'store_address'    => 'Jl. Contoh No. 123, Kota Contoh, Indonesia',
+    'operating_hours'  => 'Senin - Jumat: 08.00 - 17.00 WIB'
+];
+
+if ($result && $result->num_rows > 0) {
+    $footerSettings = $result->fetch_assoc();
 }
 ?>
 <!doctype html>
 <html lang="en">
 <head>
-    <!-- Pastikan memuat CSS Bootstrap jika digunakan -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <style>
     .footer {
@@ -26,10 +29,9 @@ if (file_exists($settings_file)) {
         padding: 20px 0;
         border-top: 1px solid #e7e7e7;
     }
-    /* Batasi lebar footer container ke 1140px */
     .footer .container {
-        max-width: 720px; /* Ukuran tetap, sudah disetel */
-        margin: 0 auto;    /* Agar center */
+        max-width: 720px;
+        margin: 0 auto;
     }
     .footer h5 {
         font-size: 18px;
@@ -64,10 +66,8 @@ if (file_exists($settings_file)) {
         <div class="row">
             <!-- Kolom 1 -->
             <div class="col-md-4">
-                <h5>About Godvlan Travel</h5>
-                <p>
-                    <?php echo htmlspecialchars($footerSettings['site_description']); ?>
-                </p>
+                <h5>About Us</h5>
+                <p><?php echo htmlspecialchars($footerSettings['site_description']); ?></p>
             </div>
             <!-- Kolom 2 -->
             <div class="col-md-4">
@@ -85,6 +85,7 @@ if (file_exists($settings_file)) {
                 <p>Email: <?php echo htmlspecialchars($footerSettings['email']); ?></p>
                 <p>Phone: <?php echo htmlspecialchars($footerSettings['phone_number']); ?></p>
                 <p>Address: <?php echo htmlspecialchars($footerSettings['store_address']); ?></p>
+                <p><strong>Operating Hours:</strong> <?php echo htmlspecialchars($footerSettings['operating_hours']); ?></p>
             </div>
         </div>
         <div class="row">
@@ -95,12 +96,12 @@ if (file_exists($settings_file)) {
     </div>
 </footer>
 <script src="assets/js/jquery-3.2.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/canvasjs.min.js"></script>
-    <script src="assets/js/chart.js"></script>
-    <script src="assets/js/counterup.min.js"></script>
-    <script src="assets/js/jquery.slicknav.js"></script>
-    <script src="assets/js/dashboard-custom.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/canvasjs.min.js"></script>
+<script src="assets/js/chart.js"></script>
+<script src="assets/js/counterup.min.js"></script>
+<script src="assets/js/jquery.slicknav.js"></script>
+<script src="assets/js/dashboard-custom.js"></script>
 </body>
 </html>
