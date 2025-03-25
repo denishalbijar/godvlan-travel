@@ -12,7 +12,8 @@ $result = $conn->query($sql);
 
 // Jika tidak ada row, buat baris default terlebih dahulu
 if ($result->num_rows == 0) {
-    $default_sql = "INSERT INTO settings (site_name, site_description, site_logo, site_icon, phone_number, email, store_address, operating_hours) VALUES ('', '', '', '', '', '', '', '')";
+    $default_sql = "INSERT INTO settings (site_name, site_description, site_logo, site_icon, phone_number, email, store_address, operating_hours, social_facebook, social_twitter, social_instagram, social_linkedin) 
+                    VALUES ('', '', '', '', '', '', '', '', '#', '#', '#', '#')";
     if ($conn->query($default_sql)) {
         // Ambil kembali data pengaturan
         $sql = "SELECT * FROM settings LIMIT 1";
@@ -33,6 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email            = $_POST['email'] ?? '';
     $store_address    = $_POST['store_address'] ?? '';
     $operating_hours  = $_POST['operating_hours'] ?? '';
+
+    // Data media sosial
+    $social_facebook  = $_POST['social_facebook'] ?? '#';
+    $social_twitter   = $_POST['social_twitter'] ?? '#';
+    $social_instagram = $_POST['social_instagram'] ?? '#';
+    $social_linkedin  = $_POST['social_linkedin'] ?? '#';
 
     // Handling file upload untuk Logo
     if (isset($_FILES['site_logo_file']) && $_FILES['site_logo_file']['error'] == UPLOAD_ERR_OK) {
@@ -60,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $site_icon = $_POST['old_site_icon'] ?? '';
     }
 
-    // Update data di database
+    // Update data di database dengan tambahan media sosial
     $sql_update = "UPDATE settings SET 
         site_name = ?, 
         site_description = ?, 
@@ -69,7 +76,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         phone_number = ?, 
         email = ?, 
         store_address = ?, 
-        operating_hours = ? 
+        operating_hours = ?,
+        social_facebook = ?,
+        social_twitter = ?,
+        social_instagram = ?,
+        social_linkedin = ?
         WHERE id = 1";
     
     $stmt = $conn->prepare($sql_update);
@@ -77,9 +88,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         die("Prepare failed: " . $conn->error);
     }
     
-    $stmt->bind_param("ssssssss", 
+    $stmt->bind_param("ssssssssssss", 
         $site_name, $site_description, $site_logo, $site_icon, 
-        $phone_number, $email, $store_address, $operating_hours
+        $phone_number, $email, $store_address, $operating_hours,
+        $social_facebook, $social_twitter, $social_instagram, $social_linkedin
     );
     
     if ($stmt->execute()) {
@@ -93,7 +105,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             "phone_number"     => $phone_number,
             "email"            => $email,
             "store_address"    => $store_address,
-            "operating_hours"  => $operating_hours
+            "operating_hours"  => $operating_hours,
+            "social_facebook"  => $social_facebook,
+            "social_twitter"   => $social_twitter,
+            "social_instagram" => $social_instagram,
+            "social_linkedin"  => $social_linkedin
         ];
     } else {
         $message = "Gagal menyimpan pengaturan. Error: " . $stmt->error;
@@ -103,6 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 $conn->close();
 ?>
+
 
 <!-- Mulai konten halaman -->
 <div class="db-info-wrap db-settings-wrap">
@@ -151,6 +168,27 @@ $conn->close();
                 <label>Waktu Operasional</label>
                 <input type="text" name="operating_hours" class="form-control" value="<?php echo htmlspecialchars($settings['operating_hours']); ?>">
             </div>
+            <!-- Input untuk Social Facebook -->
+<div class="form-group">
+    <label>Facebook</label>
+    <input type="text" name="social_facebook" class="form-control" value="<?php echo htmlspecialchars($settings['social_facebook']); ?>">
+</div>
+<!-- Input untuk Social Twitter -->
+<div class="form-group">
+    <label>Twitter</label>
+    <input type="text" name="social_twitter" class="form-control" value="<?php echo htmlspecialchars($settings['social_twitter']); ?>">
+</div>
+<!-- Input untuk Social Instagram -->
+<div class="form-group">
+    <label>Instagram</label>
+    <input type="text" name="social_instagram" class="form-control" value="<?php echo htmlspecialchars($settings['social_instagram']); ?>">
+</div>
+<!-- Input untuk Social LinkedIn -->
+<div class="form-group">
+    <label>LinkedIn</label>
+    <input type="text" name="social_linkedin" class="form-control" value="<?php echo htmlspecialchars($settings['social_linkedin']); ?>">
+</div>
+
             <button type="submit" class="btn btn-primary">Simpan Pengaturan</button>
         </form>
     </div>

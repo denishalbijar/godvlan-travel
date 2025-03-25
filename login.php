@@ -2,6 +2,31 @@
 session_start();
 include 'config.php'; // Pastikan file config.php sudah terhubung ke database "travel"
 
+// Ambil data pengaturan dari database
+$sql = "SELECT * FROM settings LIMIT 1";
+$result = $conn->query($sql);
+if ($result && $result->num_rows > 0) {
+    $settings = $result->fetch_assoc();
+} else {
+    // Nilai default jika tidak ada data pengaturan
+    $settings = [
+        "site_logo"        => "assets/images/travele-logo.png",
+        "site_icon"        => "assets/images/travele-logo1.png",
+        "site_name"        => "Travele",
+    ];
+}
+
+// Jika perlu sesuaikan relative path (sesuai struktur folder login.php)
+// Contoh: jika di login.php kamu perlu menghilangkan "../admin/":
+$settings['site_logo'] = str_replace('../admin/', 'admin/', $settings['site_logo']);
+$settings['site_icon'] = str_replace('../admin/', 'admin/', $settings['site_icon']);
+
+// Set variabel untuk memudahkan penggunaan
+$site_logo = !empty($settings['site_logo']) ? $settings['site_logo'] : "assets/images/travele-logo.png";
+$site_icon = !empty($settings['site_icon']) ? $settings['site_icon'] : "assets/images/travele-logo1.png";
+$site_name = !empty($settings['site_name']) ? $settings['site_name'] : "Travele";
+
+
 // Proses login ketika tombol ditekan
 if (isset($_POST['login'])) {
     $username = trim($_POST['username']);
@@ -52,10 +77,10 @@ if (isset($_POST['login'])) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Login | Travele</title>
+  <title>Login | <?php echo htmlspecialchars($site_name); ?></title>
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="../assets/images/favicon.png">
+  <link rel="icon" type="image/png" href="<?php echo htmlspecialchars($site_icon); ?>">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="admin/assets/css/bootstrap.min.css">
   <!-- Font Awesome -->
@@ -132,7 +157,7 @@ if (isset($_POST['login'])) {
   <div class="login-form-container">
       <form method="POST">
           <h1 class="text-center">
-              <img src="admin/assets/images/logo.png" alt="Logo">
+            <img src="<?php echo htmlspecialchars($site_logo); ?>" alt="<?php echo htmlspecialchars($site_name); ?>" style="width:180px; display:block; margin:auto;">
           </h1>
           <div class="form-group">
               <label for="username">User Name</label>

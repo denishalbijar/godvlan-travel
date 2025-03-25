@@ -1,170 +1,54 @@
-<?php include('../admin/partials/topbar.php'); ?>
+<?php
+include('../admin/partials/topbar.php');
+include('../admin/partials/sidebar.php');
+include('../config.php'); 
 
+// Ambil data users dari database
+$query = "SELECT * FROM users";
+$result = mysqli_query($conn, $query);
+?>
 
-    <?php include('../admin/partials/sidebar.php'); ?>
-            <div class="db-info-wrap">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="dashboard-box table-opp-color-box">
-                            <h4>User Details</h4>
-                            <p>Airtport Hotels The Right Way To Start A Short Break Holiday</p>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>User</th>
-                                            <th>Name</th>
-                                            <th>Phone</th>
-                                            <th>Email</th>
-                                            <th>Country</th>
-                                            <th>Listings</th>
-                                            <th>View</th>
-                                            <th>Edit</th>
-                                            <th>Delete</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><span class="list-img"><img src="assets/images/comment.jpg" alt=""></span>
-                                            </td>
-                                            <td><a href="#"><span class="list-name">Kathy Brown</span></a>
-                                            </td>
-                                            <td>+01 3214 6522</td>
-                                            <td>chadengle@dummy.com</td>
-                                            <td>Australia</td>
-                                            <td>
-                                                <span class="badge badge-primary">02</span>
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-success"><i class="far fa-eye"></i></span>
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-success"><i class="far fa-edit"></i></span>
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-danger"><i class="far fa-trash-alt"></i></span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><span class="list-img"><img src="assets/images/comment2.jpg" alt=""></span>
-                                            </td>
-                                            <td><a href="#"><span class="list-name">Kathy Brown</span></a>
-                                            </td>
-                                            <td>+01 3214 6522</td>
-                                            <td>chadengle@dummy.com</td>
-                                            <td>Australia</td>
-                                            <td>
-                                                <span class="badge badge-primary">02</span>
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-success"><i class="far fa-eye"></i></span>
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-success"><i class="far fa-edit"></i></span>
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-danger"><i class="far fa-trash-alt"></i></span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><span class="list-img"><img src="assets/images/comment3.jpg" alt=""></span>
-                                            </td>
-                                            <td><a href="#"><span class="list-name">Kathy Brown</span></a>
-                                            </td>
-                                            <td>+01 3214 6522</td>
-                                            <td>chadengle@dummy.com</td>
-                                            <td>Australia</td>
-                                            <td>
-                                                <span class="badge badge-primary">02</span>
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-success"><i class="far fa-eye"></i></span>
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-success"><i class="far fa-edit"></i></span>
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-danger"><i class="far fa-trash-alt"></i></span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><span class="list-img"><img src="assets/images/comment4.jpg" alt=""></span>
-                                            </td>
-                                            <td><a href="#"><span class="list-name">Kathy Brown</span></a>
-                                            </td>
-                                            <td>+01 3214 6522</td>
-                                            <td>chadengle@dummy.com</td>
-                                            <td>Australia</td>
-                                            <td>
-                                                <span class="badge badge-primary">02</span>
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-success"><i class="far fa-eye"></i></span>
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-success"><i class="far fa-edit"></i></span>
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-danger"><i class="far fa-trash-alt"></i></span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><span class="list-img"><img src="assets/images/comment5.jpg" alt=""></span>
-                                            </td>
-                                            <td><a href="#"><span class="list-name">Kathy Brown</span></a>
-                                            </td>
-                                            <td>+01 3214 6522</td>
-                                            <td>chadengle@dummy.com</td>
-                                            <td>Australia</td>
-                                            <td>
-                                                <span class="badge badge-primary">02</span>
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-success"><i class="far fa-eye"></i></span>
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-success"><i class="far fa-edit"></i></span>
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-danger"><i class="far fa-trash-alt"></i></span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><span class="list-img"><img src="assets/images/comment6.jpg" alt=""></span>
-                                            </td>
-                                            <td><a href="#"><span class="list-name">Kathy Brown</span></a>
-                                            </td>
-                                            <td>+01 3214 6522</td>
-                                            <td>chadengle@dummy.com</td>
-                                            <td>Australia</td>
-                                            <td>
-                                                <span class="badge badge-primary">02</span>
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-success"><i class="far fa-eye"></i></span>
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-success"><i class="far fa-edit"></i></span>
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-danger"><i class="far fa-trash-alt"></i></span>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>  
+<div class="db-info-wrap">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="dashboard-box table-opp-color-box">
+                <h4>User Details</h4>
+                <p>List of registered users</p>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Profile</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Username</th>
+                                <th>Role</th>
+                                <th>Created At</th>
+                                <th>View</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+                                <tr>
+                                    <td><img src="<?php echo $row['profile_image']; ?>" alt="Profile" width="50"></td>
+                                    <td><?php echo htmlspecialchars($row['fullname']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['email']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['username']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['role']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['created_at']); ?></td>
+                                    <td><a href="../admin/view_user.php?id=<?php echo $row['id']; ?>" class="badge badge-success"><i class="far fa-eye"></i></a></td>
+                                    <td><a href="../admin/user_edit.php?id=<?php echo $row['id']; ?>" class="badge badge-success"><i class="far fa-edit"></i></a></td>
+                                    <td><a href="../admin/delete_user.php?id=<?php echo $row['id']; ?>" class="badge badge-danger" onclick="return confirm('Are you sure?');"><i class="far fa-trash-alt"></i></a></td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <!-- Content / End -->
-            <!-- Copyrights -->
-            <?php include('../admin/partials/footers.php'); ?>
-        </div>
-        <!-- Dashboard / End -->
+        </div>  
     </div>
-    <!-- end Container Wrapper -->
-    <!-- *Scripts* -->
-   
-</body>
-</html>
+</div>
+
+<?php include('../admin/partials/footers.php'); ?>

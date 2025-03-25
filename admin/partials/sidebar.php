@@ -63,8 +63,8 @@
           </a>
           <ul>
             <li><a href="user.php"><span>User</span></a></li>
-            <li><a href="user-edit.php"><span>User edit</span></a></li>
-            <li><a href="new-user.php"><span>New user</span></a></li>
+            <li><a href="user_edit.php"><span>User edit</span></a></li>
+            <li><a href="new_user.php"><span>New user</span></a></li>
           </ul>
         </li>
         <li>

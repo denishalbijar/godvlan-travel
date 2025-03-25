@@ -1,7 +1,33 @@
-<?php include('../admin/partials/topbar.php'); ?>
+<?php 
+include('../admin/partials/topbar.php'); 
+include('../admin/partials/sidebar.php'); 
+include('../config.php'); // Pastikan ada koneksi database
 
+if (isset($_POST['Submit'])) {
+    $fullname = $_POST['fullname'];
+    $username = $_POST['username'];
+    $phone = $_POST['phone'];
+    $city = $_POST['city'];
+    $country = $_POST['country'];
+    $email = $_POST['email'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash password
 
-    <?php include('../admin/partials/sidebar.php'); ?>
+    // Query insert data ke database
+    $sql = "INSERT INTO users (fullname, username, phone_number, city, country, email, password) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssssss", $fullname, $username, $phone, $city, $country, $email, $password);
+
+    if ($stmt->execute()) {
+        echo "<script>alert('User berhasil ditambahkan!'); window.location='user.php';</script>";
+    } else {
+        echo "<script>alert('Gagal menambahkan user!');</script>";
+    }
+
+    $stmt->close();
+}
+?>
             <div class="db-info-wrap">
                 <div class="row">
                     <div class="col-lg-12">
@@ -12,20 +38,14 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label>First name</label>
-                                            <input name="firstname" class="form-control" type="text">
+                                            <label>Fullname</label>
+                                            <input name="fullname" class="form-control" type="text">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label>Last name</label>
-                                            <input name="lastname" class="form-control" type="text">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>Mobile</label>
-                                            <input name="phone" class="form-control" type="text">
+                                            <label>Username</label>
+                                            <input name="username" class="form-control" type="text">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
@@ -48,25 +68,19 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label>password</label>
-                                            <input name="password" class="form-control" type="text">
+                                            <label>Password</label>
+                                            <input name="password" class="form-control" type="password">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>Confirm Password</label>
-                                            <input name="password" class="form-control" type="text">
+                                            <input name="confirm_password" class="form-control" type="password">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>Email</label>
-                                            <input name="email" class="form-control" type="email">
-                                        </div>  
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>Confirm Email</label>
                                             <input name="email" class="form-control" type="email">
                                         </div>  
                                     </div>

@@ -1,6 +1,51 @@
 <?php
-// Pastikan session sudah dimulai di halaman utama (misalnya di index.php)
-// Jadi di sini tidak perlu session_start() lagi jika sudah dipanggil.
+// Sertakan konfigurasi dan ambil data pengaturan
+include('config.php');
+
+// Ambil data pengaturan dari database
+$sql = "SELECT * FROM settings LIMIT 1";
+$result = $conn->query($sql);
+if ($result && $result->num_rows > 0) {
+    $settings = $result->fetch_assoc();
+} else {
+    // Nilai default jika tidak ada data pengaturan
+    $settings = [
+        "site_logo"        => "assets/images/travele-logo.png",
+        "site_icon"        => "assets/images/travele-logo1.png",
+        "site_name"        => "Travele",
+        "phone_number"     => "+62 812-3456-7890",
+        "email"            => "godvlan@gmail.com",
+        "store_address"    => "20112 Medan Petisah, Sumatera Utara",
+        "social_facebook"  => "https://www.facebook.com",
+        "social_twitter"   => "https://www.twitter.com",
+        "social_instagram" => "https://www.instagram.com",
+        "social_linkedin"  => "https://www.linkedin.com"
+    ];
+}
+
+// Sesuaikan path logo dan icon jika mengandung "../admin/"
+$settings['site_logo'] = str_replace('../admin/', 'admin/', $settings['site_logo']);
+$settings['site_icon'] = str_replace('../admin/', 'admin/', $settings['site_icon']);
+
+// Pastikan logo, favicon, dan nama situs memiliki nilai default jika kosong
+$site_logo = !empty($settings['site_logo']) ? $settings['site_logo'] : "assets/images/travele-logo.png";
+$site_icon = !empty($settings['site_icon']) ? $settings['site_icon'] : "assets/images/travele-logo1.png";
+$site_name = !empty($settings['site_name']) ? $settings['site_name'] : "Travele";
+
+
+// Fungsi untuk memastikan link media sosial bersifat absolut
+function getSocialLink($link) {
+    // Jika link sudah diawali http:// atau https://, kembalikan apa adanya
+    if (strpos($link, 'http://') === 0 || strpos($link, 'https://') === 0) {
+        return $link;
+    }
+    // Jika link kosong atau hanya tanda pagar, kembalikan '#'
+    if (trim($link) === '' || $link === '#') {
+        return '#';
+    }
+    // Jika tidak, tambahkan https://
+    return 'https://' . $link;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,10 +53,9 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Godvlan Travel</title>
-  
+  <title><?php echo htmlspecialchars($site_name); ?> | Travel & Tour</title>
   <!-- favicon -->
-  <link rel="icon" type="image/png" href="assets/images/godvlan.ico">
+  <link rel="icon" type="image/png" href="<?php echo htmlspecialchars($site_icon); ?>">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="assets/vendors/bootstrap/css/bootstrap.min.css" media="all">
   <!-- FontAwesome CSS -->
@@ -148,13 +192,13 @@
             <div class="header-contact-info">
               <ul>
                 <li>
-                  <a href="#"><i class="fas fa-phone-alt"></i> +62 812-3456-7890</a>
+                  <a href="#"><i class="fas fa-phone-alt"></i> <?php echo htmlspecialchars($settings['phone_number']); ?></a>
                 </li>
                 <li>
-                  <a href="mailto:info@Travel.com"><i class="fas fa-envelope"></i> godvlan@gmail.com</a>
+                  <a href="mailto:<?php echo htmlspecialchars($settings['email']); ?>"><i class="fas fa-envelope"></i> <?php echo htmlspecialchars($settings['email']); ?></a>
                 </li>
                 <li>
-                  <i class="fas fa-map-marker-alt"></i> 20112 Medan Petisah, Sumatera Utara
+                  <i class="fas fa-map-marker-alt"></i> <?php echo htmlspecialchars($settings['store_address']); ?>
                 </li>
               </ul>
             </div>
@@ -162,10 +206,10 @@
           <div class="col-lg-4 d-flex justify-content-lg-end justify-content-between align-items-center">
             <div class="header-social social-links">
               <ul>
-                <li><a href="#"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
-                <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
-                <li><a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
-                <li><a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
+                <li><a href="<?php echo htmlspecialchars(getSocialLink($settings['social_facebook'])); ?>"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
+                <li><a href="<?php echo htmlspecialchars(getSocialLink($settings['social_twitter'])); ?>"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                <li><a href="<?php echo htmlspecialchars(getSocialLink($settings['social_instagram'])); ?>"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+                <li><a href="<?php echo htmlspecialchars(getSocialLink($settings['social_linkedin'])); ?>"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
               </ul>
             </div>
             <!-- Tombol Pencarian -->
@@ -198,8 +242,10 @@
         <div class="site-identity">
           <h1 class="site-title">
             <a href="index.php">
-              <img class="white-logo" src="assets/images/travele-logo.png" alt="logo">
-              <img class="black-logo" src="assets/images/travele-logo1.png" alt="logo">
+              <!-- Gunakan logo dinamis -->
+              <img class="white-logo" src="<?php echo htmlspecialchars($site_logo); ?>" alt="logo">
+              <!-- Jika diinginkan, bisa gunakan site_icon untuk logo alternatif -->
+              <img class="black-logo" src="<?php echo htmlspecialchars($site_logo); ?>" alt="logo">
             </a>
           </h1>
         </div>
@@ -310,10 +356,10 @@
                         <a href="admin/user.php">User List</a>
                       </li>
                       <li>
-                        <a href="admin/user-edit.php">User Edit</a>
+                        <a href="admin/user_edit.php">User Edit</a>
                       </li>
                       <li>
-                        <a href="admin/new-user.php">New User</a>
+                        <a href="admin/new_user.php">New User</a>
                       </li>
                     </ul>
                   </li>
