@@ -12,7 +12,7 @@ if ($result && $result->num_rows > 0) {
     $settings = [
         "site_logo"        => "assets/images/travele-logo.png",
         "site_icon"        => "assets/images/travele-logo1.png",
-        "site_name"        => "Travele",
+        "site_name"        => "Travele"
     ];
 }
 

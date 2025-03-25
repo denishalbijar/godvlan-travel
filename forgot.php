@@ -18,11 +18,9 @@ if ($result && $result->num_rows > 0) {
 
 // Jika perlu sesuaikan relative path (sesuai struktur folder login.php)
 // Contoh: jika di login.php kamu perlu menghilangkan "../admin/":
-$settings['site_logo'] = str_replace('../admin/', 'admin/', $settings['site_logo']);
 $settings['site_icon'] = str_replace('../admin/', 'admin/', $settings['site_icon']);
 
 // Set variabel untuk memudahkan penggunaan
-$site_logo = !empty($settings['site_logo']) ? $settings['site_logo'] : "assets/images/travele-logo.png";
 $site_icon = !empty($settings['site_icon']) ? $settings['site_icon'] : "assets/images/travele-logo1.png";
 $site_name = !empty($settings['site_name']) ? $settings['site_name'] : "Travele";
 
