@@ -134,7 +134,7 @@ $site_name = !empty($settings['site_name']) ? $settings['site_name'] : "Travele"
                      </div>
                      <div class="col-md-2 text-center">
                         <div class="footer-logo">
-                           <a href="#"><img src="assets/images/travele-logo.png" alt=""></a>
+                           <a href="#"><img src="<?php echo htmlspecialchars($site_logo); ?>" alt="<?php echo htmlspecialchars($site_name); ?>" style="width:180px; display:block; margin:auto;"></a>
                         </div>
                      </div>
                      <div class="col-md-5">
